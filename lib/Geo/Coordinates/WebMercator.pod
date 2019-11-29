@@ -1,0 +1,29 @@
+package Geo::Coordinates::WebMercator;
+# ABSTRACT: Convert Web Mercator coordinates
+
+
+__END__
+
+=head1 SYNOPSIS
+
+ # very early draft of future API
+ 
+ use Geo::Coordinates::WebMercator qw( :all );
+ 
+ ($lon, $lat) = xy_to_lonlat($zoom, $tile_x, $tile_y);
+ ($tile_x, $tile_y) = lonlat_to_xy($lon, $lat, $zoom_target);
+ 
+ ($easting, $northing) = xy_to_en($zoom, $tile_x, $tile_y);
+ ($tile_x, $tile_y) = en_to_xy($easting, $northing, $zoom_target);
+ 
+ ($tile_x, $tile_y) = zoom_to($zoom, $tile_x, $tile_y, $zoom_target);
+ 
+ $metres = approx_real_edge_length($zoom, $tile_y);
+
+=head1 DESCRIPTION
+
+This module converts between various representations of Web Mercator coordinates.
+
+=head1 SEE ALSO
+
+F<README.pod>

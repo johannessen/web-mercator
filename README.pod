@@ -1,0 +1,93 @@
+=pod
+
+=head1 Representations of Web Mercator Coordinates
+
+The L<Web Mercator projection|https://en.wikipedia.org/wiki/Web_Mercator_projection>
+(also known as Pseudo Mercator) is the de facto standard for Web mapping
+applications. When working with it, there are three different ways to
+precisely identify arbitrary WGS84 locations:
+
+=over
+
+=item Unprojected coordinates: Longitude and Latitude (EPSG:4326).
+
+For example, Paris is roughly at 2.35E<deg> East and 48.85E<deg> North.
+
+Typically used for import, export or storage of coordinates used with Web
+mapping systems.
+
+=item Untiled projected coordinates: Easting and Northing (EPSG:3857).
+
+For example, Paris is roughly at S<262 km> East and S<6250 km> North.
+
+Used by professional GIS systems when data based on Web Mercator is imported.
+
+=item Tiled projected coordinates: Zoom and Tile X/Y.
+
+For example, at zoom 4, Paris is roughly at S<7.6047 X> and S<5.0047 Y>.
+
+Tiled coordinates can be scaled to arbitrary zoom levels. In this
+representation, the nearest integers represent the tile's centre;
+the fractional remainders identify the location within the tile.
+
+For example, at S<Zoom 4>, Paris is on
+L<Tile 8/5|http://a.tile.openstreetmap.org/4/8/5.png>, roughly S<40 %> to
+the left of the tile's centre. When rendered with 256 by 256 pixels, that
+would be at S<26.8 px X> and S<129.2 px Y> from the tile's top-left corner.
+
+The tiled projected coordinates are dimensionless. The tiles are square
+and scaled such that, at zoom 0, the entire length of the equator fits
+exactly onto a single tile. 
+
+=cut
+
+=pod
+
+=back
+
+
+=head1 Implementations
+
+There is currently no single Perl module that allows converting between
+all of these different representations.
+
+
+=over
+
+=item *
+
+L<Geo::Proj4> allows converting between EPSG:4326 and EPSG:3857, but
+struggles to keep up with changes in the backend C<proj4> library.
+
+=item *
+
+L<Geo::Coordinates::GMap> comes very close to supporting tiled coordinates
+as described above, but uses the top left corner of each tile as origin
+for the coordinate within it. While this may make the module easier to
+work with for certain use cases, it in effect systematically skews the
+coordinate space towards the northwest by C<0.5>. This becomes a problem
+when using integer tile numbers directly to encode locations. Moreover,
+only integer zoom levels are supported.
+
+=item *
+
+L<Geo::OSM::Tiles> only works with integer tile coordinates, dropping any
+fractional components.
+
+=back
+
+=head1 Formulas
+
+=over
+
+=item * See F<examples/> for I<Grapher.app> files.
+
+=item * L<https://wiki.openstreetmap.org/wiki/Slippy_map_tilenames>
+
+=item * L<https://en.wikipedia.org/wiki/Web_Mercator_projection#Formulas>
+
+=cut
+
+# https://en.wikipedia.org/wiki/List_of_trigonometric_identities
+
+=back
