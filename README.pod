@@ -57,7 +57,13 @@ all of these different representations.
 =item *
 
 L<Geo::Proj4> allows converting between EPSG:4326 and EPSG:3857, but
-struggles to keep up with changes in the backend C<proj4> library.
+struggles to keep up with changes in the backend PROJ library.
+
+=item *
+
+L<Geo::LibProj::cs2cs> also allows converting between EPSG:4326 and
+EPSG:3857. It is compatible with all versions of the PROJ library,
+but has a higher overhead than L<Geo::Proj4> does.
 
 =item *
 
