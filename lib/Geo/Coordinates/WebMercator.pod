@@ -18,6 +18,9 @@ __END__
  
  ($tile_x, $tile_y) = zoom_to($zoom, $tile_x, $tile_y, $zoom_target);
  
+ $quadkey = quadkey_encode($zoom, $tile_x, $tile_y, $zoom_target);
+ ($zoom, $tile_x, $tile_y) = quadkey_decode($quadkey);
+ 
  $metres = approx_real_edge_length($zoom, $tile_y);
 
 =head1 DESCRIPTION
